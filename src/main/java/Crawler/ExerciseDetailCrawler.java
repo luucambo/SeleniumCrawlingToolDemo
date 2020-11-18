@@ -30,19 +30,16 @@ public class ExerciseDetailCrawler {
             driver.get(exerciseUrl);
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             WebElement exerciseDescription = driver.findElement(By.xpath("//div[@class='exercise_description']"));
-            String innerHtml = exerciseDescription.getAttribute("innerHTML");
+            String innerHtml = exerciseDescription.getAttribute("innerText");
 
-            String[] splits = innerHtml.split("<div>&nbsp;</div>");
+            String[] splits = innerHtml.split("\n");
             List<String> processingList = new ArrayList<String>();
             for (int i = 0; i < splits.length; i++) {
                 String processString = splits[i]
                         .replace("\n", "")
-                        .replace("<div>", "")
-                        .replace("</div>", "")
-                        .replace("</b>", "")
-                        .replace("<b>", "").trim();
+                 .trim();
 
-                if (processString.length() > 0)
+                if (processString.length() > 1)
                     processingList.add(processString);
             }
 
